@@ -185,6 +185,16 @@ class Vector2 {
     isOrthogonal(v: Vector2, tolerance: number = SIX_DECIMAL_TOLERANCE) {
         return NumberUtil.isEquql(this.dot(v), 0, tolerance);
     }
+
+    rotate(angle: number, v: Vector2) {
+        const x = this.x - v.x;
+        const y = this.y - v.y;
+
+        const x_prime = v.x + ((x * Math.cos(angle)) - (y*Math.sin(angle)));
+        const y_prime = v.y + ((x * Math.cos(angle)) - (y*Math.sin(angle)));
+
+        return new Vector2(x_prime, y_prime);
+    }
 }
 
 export {IVec2, Vector2};

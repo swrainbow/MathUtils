@@ -125,6 +125,8 @@ class Matrix3 {
             s, c, 0,
             0, 0, 1,
         )
+
+        return this;
     }
 
     copy(m: Matrix3) {

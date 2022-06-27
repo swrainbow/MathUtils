@@ -182,7 +182,9 @@ class Vector2 {
         return NumberUtil.isEquql(this.cross(v), 0, tolerance);
     }
     
-
+    isOrthogonal(v: Vector2, tolerance: number = SIX_DECIMAL_TOLERANCE) {
+        return NumberUtil.isEquql(this.dot(v), 0, tolerance);
+    }
 }
 
 export {IVec2, Vector2};

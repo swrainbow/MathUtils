@@ -61,3 +61,5 @@ class Circle {
         }
     }
 }
+
+export { Circle }

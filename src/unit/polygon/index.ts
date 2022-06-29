@@ -109,7 +109,7 @@ class Polygon {
              * 实现： 从point 发射X负方向的射线， 判断其和多边形的交点
              * 
              * （（yi > y） !== (yj > y)）某边的两个端点要在point的上下两侧（Y 方向）
-             *  ((yi > y) !== (yj > y)) && ( xi + (y - yi) / (yj - yi) * (xj - xi) < x)
+             *  ((yi > y) !== (yj > y)) && ( xi + (y - yi) / (yj - yi) * (xj - xi) < x) 相似三角形
              */
 
             const intersected = ((yi > y) !== (yj > y)) && ( xi + (y - yi) / (yj - yi) * (xj - xi) < x);

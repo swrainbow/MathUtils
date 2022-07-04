@@ -4,9 +4,18 @@ import { Line2 } from "../line2";
 import { Vector2 } from "../vector2";
 
 const CLOCKWISE = false;
-
+/**
+ * 表示二位世界的圆弧
+ */
 class Arc {
-
+    /**
+     * 通过圆弧上不同的三点构成一个圆弧
+     * @param startPoint 
+     * @param arcPoint 起点
+     * @param endPoint 弧上任意点
+     * @param isClockwise 终点
+     * @returns 
+     */
     static createByThreePoint(startPoint: Vector2, arcPoint: Vector2, endPoint: Vector2, isClockwise: boolean = CLOCKWISE) {
         const l1 = new Line2(startPoint, arcPoint);
         const l2 = new Line2(arcPoint, endPoint);

@@ -1,6 +1,8 @@
 import { IVec2, Vector2 } from "../vector2";
 
-
+/**
+ *  表示二维空间中的椭圆
+ */
 class Ellipse {
 
     /**
@@ -61,21 +63,41 @@ class Ellipse {
         return this;
     }
 
+    /**
+     * 设置椭圆横轴半径
+     * @param rx 椭圆横轴半径
+     * @returns 当前Ellipse
+     */
     setRx(rx: number) {
         this.rx = rx;
         return this;
     }
 
+    /**
+     * 设置椭圆纵轴半径
+     * @param ry 椭圆纵轴半径
+     * @returns 当前Ellipse
+     */
     setRy(ry: number) {
         this.ry = ry;
         return this;
     }
 
+    /**
+     * 设置椭圆的旋转轴
+     * @param rotate 
+     * @returns 当前的Ellipse
+     */
     setRotate(rotate: number) {
         this.rotate = rotate;
         return this;
     }
 
+    /**
+     * 复制指定椭圆的数据到自身
+     * @param ellipse 
+     * @returns 
+     */
     copy(ellipse: Ellipse) {
         const { center, rx, ry, rotate} = ellipse;
         this.center.set(center.x, center.y);
@@ -85,6 +107,10 @@ class Ellipse {
         return this;
     }
 
+    /**
+     * 复制当前椭圆
+     * @returns 
+     */
     clone() {
         const {center, rx, ry, rotate} = this;
         return new Ellipse(center,rx, ry, rotate);

@@ -233,7 +233,7 @@ class Vector2 {
     }
 
     /**
-     * 对当前向量应用矩阵 矩阵左乘
+     * 对当前向量应用矩阵 矩阵左乘！
      * @param matrix 
      * @returns 
      */

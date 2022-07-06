@@ -57,6 +57,14 @@ class Intersection {
         return length < circle.radius + tolerance;
     }
 
+    /**
+     *  判断圆和圆是否相交
+     * @param c1 圆1
+     * @param c2 圆2
+     * @param includeTangent 是否包含相切 
+     * @param tolerance 误差
+     * @returns 
+     */
     static isCircleIntersectCircle(c1: Circle, c2: Circle, includeTangent: boolean = true, tolerance: number = SIX_DECIMAL_TOLERANCE) {
         const distance = Vector2Util.distance(c1.center, c2.center);
         return includeTangent ? distance <= c1.radius + c2.radius + tolerance : distance < c1.radius + c2.radius + tolerance;

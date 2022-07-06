@@ -2,29 +2,53 @@ import { Vector2 } from '../vector2'
 
 const MATRIX3_SIZE = 9;
 
-
+/**
+ * 表示一个 3 * 3 的矩阵
+ */
 class Matrix3 {
+    /**
+     * 零矩阵
+     */
     static readonly Zero = new Matrix3(
         0, 0, 0,
         0, 0, 0,
         0, 0, 0,
     );
 
+    /**
+     * 单位矩阵
+     */
     static readonly Identity = new Matrix3(
         1, 0, 0,
         0, 1, 0,
         0, 0, 1,
     )
 
+    /**
+     * 依次将每个矩阵乘起来
+     * @param matrices 
+     * @returns 
+     */
     static multiplyMatrices(matrices: Matrix3[]) {
         return matrices.reduce((a, b) => a.multiply(b), Matrix3.Identity);
     }
 
 
+    /**
+     * 依次将每个矩阵左乘
+     * @param matrices 
+     * @returns 
+     */
     static preMultiplyMatrices(matrices: Matrix3[]) {
         return matrices.reduce((a, b) => a.preMultiply(b), Matrix3.Identity);
     }
 
+    /**
+     * 矩阵相乘
+     * @param a 
+     * @param b 
+     * @returns 
+     */
     private static product(a: Matrix3, b: Matrix3) {
         const [
             a11, a12, a13,
@@ -68,6 +92,13 @@ class Matrix3 {
         ];
     }
 
+    /**
+     * 设置矩阵的值
+     * m11 m12 m13
+     * m21 m22 m23
+     * m31 m32 m33
+     * @returns 
+     */
     set(m11: number, m12: number, m13: number,
         m21: number, m22: number, m23: number,
         m31: number, m32: number, m33: number,
@@ -80,11 +111,17 @@ class Matrix3 {
         return this;
     }
 
+    /**
+     * 将数组设置为矩阵的值
+     * @param elements an array of matrix elements
+     * @param offset start
+     * @returns 当前矩阵
+     */
     fromArray(elements: number[], offset: number = 0) {
-        const length = elements.length - offset < MATRIX3_SIZE ? elements.length - offset:MATRIX3_SIZE;
-        for(let i = 0; i < length; i++) {
+        const length = elements.length - offset < MATRIX3_SIZE ? elements.length - offset : MATRIX3_SIZE;
+        for (let i = 0; i < length; i++) {
             const result = elements[i + offset];
-            if(typeof result === 'number') {
+            if (typeof result === 'number') {
                 this.elements[i] = elements[i + offset];
             }
         }
@@ -92,10 +129,19 @@ class Matrix3 {
         return this;
     }
 
+    /**
+     * 将矩阵的值转化成数组输出
+     * @returns 
+     */
     toArray() {
         return [...this.elements];
     }
 
+    /**
+     * 根据平移变换设置矩阵的值
+     * @param v 
+     * @returns 
+     */
     fromTranslate(v: Vector2) {
         this.set(
             1, 0, v.x,
@@ -106,6 +152,11 @@ class Matrix3 {
         return this;
     }
 
+    /**
+     * 根据缩放变换设置矩阵的值
+     * @param v 
+     * @returns 
+     */
     fromScale(v: Vector2) {
         this.set(
             v.x, 0, 0,
@@ -116,6 +167,11 @@ class Matrix3 {
         return this;
     }
 
+    /**
+     * 根据旋转变换设置矩阵的值
+     * @param radian 
+     * @returns 
+     */
     fromRotate(radian: number) {
         const c = Math.cos(radian);
         const s = Math.sin(radian);
@@ -129,22 +185,46 @@ class Matrix3 {
         return this;
     }
 
+    /**
+     * 将矩阵m的值拷贝给当前矩阵
+     * @param m 
+     * @returns 
+     */
     copy(m: Matrix3) {
         return this.fromArray(m.toArray());
     }
 
+    /**
+     * 复制当前矩阵
+     * @returns 
+     */
     clone() {
         return new Matrix3().fromArray(this.toArray());
     }
 
+    /**
+     * 乘矩阵m
+     * @param m 
+     * @returns 
+     */
     multiply(m: Matrix3): Matrix3 {
-        return new Matrix3().fromArray(Matrix3.product(m, this));
+        return new Matrix3().fromArray(Matrix3.product(this, m));
     }
 
+    /**
+     * 左乘
+     * @param m 
+     * @returns 
+     */
     preMultiply(m: Matrix3) {
         return new Matrix3().fromArray(Matrix3.product(m, this));
     }
 
+    /**
+     *  乘一个标量
+     * @param v 
+     * @returns 
+     */
     multiplyScalar(v: number) {
         const arr: number[] = [];
 
@@ -156,6 +236,10 @@ class Matrix3 {
         return new Matrix3().fromArray(arr);
     }
 
+    /**
+     * 转置矩阵
+     * @returns 
+     */
     transpose() {
         const arr: number[] = [];
 
@@ -167,6 +251,10 @@ class Matrix3 {
         return new Matrix3().fromArray(arr);
     }
 
+    /**
+     * 逆矩阵
+     * @returns 
+     */
     invert() {
         const determinant = this.determinant();
         if (determinant === 0) {
@@ -198,6 +286,10 @@ class Matrix3 {
         );
     }
 
+    /**
+     * 计算行列式
+     * @returns 
+     */
     determinant() {
         const [
             m11, m12, m13,
@@ -210,6 +302,11 @@ class Matrix3 {
             + m13 * (m21 * m32 - m31 * m22);
     }
 
+    /**
+     * 当前矩阵的基础上叠加平移变化之后的矩阵 都是齐次坐标系 左乘
+     * @param v 
+     * @returns 
+     */
     applyTranslate(v: Vector2) {
         const [
             m11, m12, m13,
@@ -234,9 +331,79 @@ class Matrix3 {
 
 
 
+    /**
+         * 计算在当前矩阵的基础上叠加缩放变化后的矩阵
+         * 
+         * Applies scale transform to this matrix
+         * @returns 新的矩阵 (A new matrix)
+         */
+    applyScale(v: Vector2) {
+        const [
+            m11, m12, m13,
+            m21, m22, m23,
+            m31, m32, m33,
+        ] = this.elements;
+        const { x, y } = v;
 
+        const arr: number[] = [];
+        arr[0] = m11 * x;
+        arr[1] = m12 * x;
+        arr[2] = m13 * x;
+        arr[3] = m21 * y;
+        arr[4] = m22 * y;
+        arr[5] = m23 * y;
+        arr[6] = m31;
+        arr[7] = m32;
+        arr[8] = m33;
 
+        return new Matrix3().fromArray(arr);
+    }
 
+    /**
+     * 计算在当前矩阵的基础上叠加旋转变化后的矩阵
+     * 
+     * Applies rotate transform to this matrix
+     * @param radian theta Rotation angle in radians.
+     * @returns 新的矩阵 (A new matrix)
+     */
+    applyRotate(radian: number) {
+        const [
+            m11, m12, m13,
+            m21, m22, m23,
+            m31, m32, m33,
+        ] = this.elements;
+
+        const c = Math.cos(radian);
+        const s = Math.sin(radian);
+
+        const arr: number[] = [];
+        arr[0] = m11 * c - m21 * s;
+        arr[1] = m12 * c - m22 * s;
+        arr[2] = m13 * c - m23 * s;
+        arr[3] = m11 * s + m21 * c;
+        arr[4] = m12 * s + m22 * c;
+        arr[5] = m13 * s + m23 * c;
+        arr[6] = m31;
+        arr[7] = m32;
+        arr[8] = m33;
+
+        return new Matrix3().fromArray(arr);
+    }
+
+    /**
+     * 判断矩阵是否相等
+     * 
+     * Determines whether the current matrix and m are equal
+     */
+    equals(m: Matrix3) {
+        const mArr = m.toArray();
+        for (let i = 0; i < MATRIX3_SIZE; i++) {
+            if (this.elements[i] !== mArr[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
 

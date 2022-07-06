@@ -84,6 +84,13 @@ class Polygon {
     }
 
 
+    /**
+     * 判断目标点是否在多边形内
+     * @param point 目标点
+     * @param includeEdge 多边形范围是否包含边
+     * @param tolerance 误差
+     * @returns 
+     */
     isPointInsidePolygon(point: Vector2, includeEdge: boolean = true, tolerance: number = SIX_DECIMAL_TOLERANCE) {
         const { x, y} = point;
 

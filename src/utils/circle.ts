@@ -3,6 +3,13 @@ import { Matrix3 } from "../unit/matrix3";
 import { Vector2 } from "../unit/vector2";
 
 class CircleUtil {
+    /**
+     * 获取点在圆上的角度 （水平向右为 0）
+     * @param center 圆心
+     * @param point 目标点
+     * @param isClockwise 圆周是否为顺时针 （默认 false）
+     * @returns 弧度
+     */
     static getAngleByPoint(center: Vector2, point: Vector2, isClockwise: boolean = false) {
         const angle = point.sub(center).angle;
         return isClockwise ? TWO_PI - angle : angle;

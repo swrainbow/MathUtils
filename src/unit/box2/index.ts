@@ -109,7 +109,7 @@ class Box2 {
      * Box2的尺寸
      */
     get size() {
-        return Utils.Vector2.interpolate(this.min, this.max, 0.5);
+        return this.max.sub(this.min);
     }
 
     /**

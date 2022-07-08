@@ -1,6 +1,6 @@
 {
-  "name": "@s/mathUtils",
-  "version": "0.0.2",
+  "name": "s-mathutil",
+  "version": "0.0.7",
   "description": "math libary for render",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,12 @@
      "doc": "typedoc --options ./typedoc.json",
      "build": "rm -rf lib && rm -rf types && tsc"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+hhttps://github.com/swrainbow/mathUtils"
+  },
+  "homepage": "https://github.com/swrainbow/mathUtils",
+  "keywords": ["math"],
   "author": "",
   "license": "ISC",
   "dependencies": {},

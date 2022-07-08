@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+hhttps://github.com/swrainbow/mathUtils"
   },
-  "homepage": "https://github.com/swrainbow/mathUtils",
+  "homepage": "https://github.com/swrainbow/mathUtils#readme",
   "keywords": ["math"],
   "author": "",
   "license": "ISC",
